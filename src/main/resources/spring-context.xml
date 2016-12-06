@@ -9,11 +9,15 @@
 		http://www.springframework.org/schema/context 
 		http://www.springframework.org/schema/context/spring-context-4.0.xsd
 		http://www.springframework.org/schema/jdbc 
-		http://www.springframework.org/schema/jdbc/spring-jdbc-4.0.xsd
+		http://www.springframework.org/schema/jdbc/spring-jdbc-4.0.xsd">
 	
 	<!-- 加载配置属性文件 -->
 	<context:property-placeholder ignore-unresolvable="true" 
 	location="classpath:application.properties" />
+	
+	<context:component-scan base-package="com.dota.gg">
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />
+    </context:component-scan>
 	
 	<!-- c3p0数据连接池 -->
 	<bean id="c3p0DataSource" name="dataSource"
@@ -26,7 +30,6 @@
 
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="c3p0DataSource" />
-		<property name="configLocation" value="classpath:mybatis-config.xml"></property>
 		<property name="mapperLocations" value="classpath:/maps/*.xml" />
 	</bean>
 
